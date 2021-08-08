@@ -1,4 +1,4 @@
-const COMMENTS =
+const CommentsData =
     [
         {
             dishId: 0,
@@ -163,4 +163,4 @@ const COMMENTS =
 
     ];
 
-export default COMMENTS;
+export default CommentsData;

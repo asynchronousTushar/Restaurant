@@ -1,9 +1,10 @@
 import React from 'react';
+import List from './List';
 
 const Body = () => {
     return (
         <div>
-            efe
+            <List/>
         </div>
     );
 }
