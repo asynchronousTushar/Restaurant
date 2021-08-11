@@ -4,20 +4,30 @@ import Item from './Item';
 import DishesList from './DishesList';
 import Comments from './Comments';
 import CommentsData from '../../data/CommentsData';
+import { Modal, ModalBody, ModalFooter, Button} from 'reactstrap';
 
 class List extends Component {
     state={
         Dishes: DISHES,
         selectedItem: null,
-        commentsData: null
+        commentsData: null,
+        modelToggler: false
     }
 
     listItem = (item) => {
         this.setState({
             selectedItem: item,
-            commentsData: CommentsData
-        })
+            commentsData: CommentsData,
+            modelToggler: !this.state.modelToggler
+        });
     }
+
+    modelTogglerHandeler = () => {
+        this.setState({
+            modelToggler: !this.state.modelToggler
+        });
+    }
+
 
 
     render() {
@@ -30,7 +40,9 @@ class List extends Component {
         let Dishesdetail = null;
 
         if (this.state.selectedItem !=null) {
-            Dishesdetail = <Item item={this.state.selectedItem} />
+            Dishesdetail = <ul className="row">
+                    <Item item={this.state.selectedItem} />
+                </ul>
         }
 
         let commentsFinder = null;
@@ -48,12 +60,23 @@ class List extends Component {
 
 
         return (
+            <div>
             <div className="row mt-4">
                 <div className="List col-3">
                     {dishesList}
                 </div>
-                {Dishesdetail}
-                <div className="col-3 ">{commentsFinder}</div>
+                </div>
+                <div className="row">
+                    <Modal isOpen={this.state.modelToggler} size="lg" contentClassName="my-modal-style">
+                        <ModalBody>
+                            {Dishesdetail}
+                            <ul>{commentsFinder}</ul>
+                        </ModalBody>
+                        <ModalFooter>
+                            <Button onClick={this.modelTogglerHandeler}>Close</Button>
+                        </ModalFooter>
+                    </Modal>
+                </div>
             </div>
         );
     }

@@ -4,3 +4,14 @@
 .Navigation li {
     font-weight: bold;
 }
+
+.my-modal-style ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+
+.my-modal-style li h2 {
+    text-align: center;
+}
