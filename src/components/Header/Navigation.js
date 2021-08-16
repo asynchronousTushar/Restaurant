@@ -26,7 +26,7 @@ class Navigation extends React.Component {
                         <Collapse isOpen={this.state.isNavOpen} navbar  >
                             <Nav className="ml-auto float-left" navbar >
                                 <NavItem>
-                                    <NavLink to="/" exact className="nav-link" >Home</NavLink>
+                                    <NavLink to="/home" exact className="nav-link" >Home</NavLink>
                                 </NavItem>
                                 <NavItem>
                                     <NavLink to="/blog" exact className="nav-link" >Blog</NavLink>

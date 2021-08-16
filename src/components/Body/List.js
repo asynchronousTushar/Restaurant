@@ -60,13 +60,13 @@ class List extends Component {
 
 
         return (
-            <div>
-            <div className="row mt-4">
-                <div className="List col-3">
-                    {dishesList}
+            <div className="List" >
+                <div className="row mt-4 ">
+                    <div className="List col-3">
+                        {dishesList}
+                    </div>
                 </div>
-                </div>
-                <div className="row">
+                <div className="row" >
                     <Modal isOpen={this.state.modelToggler} size="lg" contentClassName="my-modal-style">
                         <ModalBody>
                             {Dishesdetail}
