@@ -10,9 +10,9 @@ const Comments = props => {
                     <h2>{props.comment.author}</h2>
                     <br />
                     <h5>Rating: {props.comment.rating}</h5>
-                    <br/>
-                    <p style={{fontWeight: "bold"}}>{props.comment.comment}</p>
-                    <p style={{fontSize: "12px"}}>{ dateFormat(props.comment.date, 'fullDate')}</p>
+                    <br />
+                    <p style={{ fontWeight: "bold" }}>{props.comment.comment}</p>
+                    <p style={{ fontSize: "12px" }}>{dateFormat(props.comment.date, 'fullDate')}</p>
                 </CardBody>
             </Card>
         </li>
