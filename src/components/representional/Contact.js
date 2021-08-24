@@ -1,32 +1,25 @@
 import React from 'react';
-import { Button, Form, FormGroup, Input, Label, Col } from 'reactstrap';
+import { Button, FormGroup, Label, Col } from 'reactstrap';
+import { Form, Control, Errors, actions } from 'react-redux-form';
+import { connect } from 'react-redux';
 
-class Contact extends React.Component {
-    constructor() {
-        super()
-        this.state = {
-            firstname: "",
-            lastname: "",
-            telnum: "",
-            email: "",
-            agree: false,
-            contactType: "tel.",
-            message: ""
+const mapDispatchToprops = dispatch => {
+    return {
+        resetFeedbackForm: () => {
+            dispatch(actions.reset('feedback'));
         }
     }
+}
 
-    inputHandeler = event => {
-        const name = event.target.name;
-        const value = event.target.type === "checkbox" ? event.target.checked : event.target.value;
+const required = val => val && val.length;
+const isNumber = val => !isNaN(Number(val));
+const validEmail = val => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(val);
 
-        this.setState({
-            [name]: value
-        });
-    }
+class Contact extends React.Component {
 
-    submitHandeler = event => {
-        console.log(this.state);
-        event.preventDefault();
+    submitHandeler = values => {
+        console.log(values);
+        this.props.resetFeedbackForm();
     }
 
     render() {
@@ -38,51 +31,80 @@ class Contact extends React.Component {
                         <h3>Send us your Feedback </h3>
                     </div>
                     <div className="col-12 col-lg-8 mx-auto mt-4" >
-                        <Form onSubmit={event => this.submitHandeler(event)} >
+                        <Form model="feedback" onSubmit={values => this.submitHandeler(values)} >
                             <FormGroup row>
                                 <Label htmlFor="firstname" md={3} >First Name : </Label>
                                 <Col md={9} >
-                                    <Input type="text" name="firstname" placeholder="First Name" value={this.state.firstname} onChange={event => this.inputHandeler(event)} />
+                                    <Control.text model=".firstname" name="firstname" placeholder="First Name" className="form-control" validators={{
+                                        required
+                                    }} />
+                                    <Errors className="text-danger" model=".firstname" show="touched" messages={{
+                                        required: 'Required'
+                                    }} />
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
                                 <Label htmlFor="lastname" md={3} >Last Name : </Label>
                                 <Col md={9} >
-                                    <Input type="text" name="lastname" placeholder="Last Name" value={this.state.lastname} onChange={event => this.inputHandeler(event)} />
+                                    <Control.text model=".lastname" name="lastname" placeholder="Last Name" className="form-control" validators={{
+                                        required
+                                    }} />
+                                     <Errors className="text-danger" model=".lastname" show="touched" messages={{
+                                        required: 'Required'
+                                    }} />
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
                                 <Label htmlFor="telnum" md={3} > Mobile : </Label>
                                 <Col md={9} >
-                                    <Input type="tel" name="telnum" placeholder="Mobile" value={this.state.telnum} onChange={event => this.inputHandeler(event)} />
+                                    <Control.text model=".telnum" name="telnum" placeholder="Mobile" className="form-control" validators={{
+                                        required,
+                                        isNumber
+                                    }} />
+                                    <Errors className="text-danger" model=".telnum" show="touched" messages={{
+                                        required: 'Required ',
+                                        isNumber: "Please insert number."
+                                    }} />
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
                                 <Label htmlFor="email" md={3} >Email : </Label>
                                 <Col md={9} >
-                                    <Input type="email" name="email" placeholder="Email" value={this.state.email} onChange={event => this.inputHandeler(event)} />
+                                    <Control.text model=".email" name="email" placeholder="Email" className="form-control"validators={{
+                                        required,
+                                        validEmail
+                                    }} />
+                                    <Errors className="text-danger" model=".email" show="touched" messages={{
+                                        required: 'Required ',
+                                        validEmail: "Please insert Valid email."
+                                    }} />
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
                                 <Col md={{ size: 5, offset: 3 }}>
                                     <FormGroup check>
                                         <Label check>
-                                            <Input type="checkbox" name="agree" value={this.state.agree} onChange={event => this.inputHandeler(event)} /> <strong>May we contact you?</strong>
+                                            <Control.checkbox model=".agree" name="agree" className="form-check-input" /> <strong>May we contact you?</strong>
                                         </Label>
                                     </FormGroup>
                                 </Col>
                                 <Col md={{ size: 3, offset: 1 }}>
-                                    <Input type="select" name="contactType" value={this.state.contactType} onChange={event => this.inputHandeler(event)} >
+                                    <Control.select model=".contactType" name="contactType" className="form-control">
                                         <option>Mobile</option>
                                         <option>Email</option>
 
-                                    </Input>
+                                    </Control.select>
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
                                 <Label htmlFor="message" md={3} >Your Feedback :</Label>
                                 <Col md={9} >
-                                    <Input type="textarea" name="message" value={this.state.message} rows="12" onChange={event => this.inputHandeler(event)} />
+                                    <Control.textarea model=".message" name="message" rows="12" className="form-control" validators={{
+                                        required
+                                    }} />
+                                    <Errors className="text-danger" model=".message" show="touched" messages={{
+                                        required: 'Required'
+                                    }} />
                                 </Col>
                             </FormGroup>
                             <FormGroup>
@@ -98,4 +120,4 @@ class Contact extends React.Component {
     }
 }
 
-export default Contact;
+export default connect(null, mapDispatchToprops)(Contact);

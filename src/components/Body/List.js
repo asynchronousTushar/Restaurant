@@ -49,7 +49,6 @@ class List extends Component {
     }
 
     render() {
-        console.log(this.props.Dishes.isLoading)
         
         if (this.props.Dishes.isLoading) {
             return (
