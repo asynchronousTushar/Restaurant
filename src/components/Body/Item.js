@@ -1,5 +1,6 @@
 import React from "react";
-import { Card, CardTitle, CardBody, CardImg, CardText } from "reactstrap";
+import { Card, CardTitle, CardBody, CardImg, CardText } from "reactstrap"; 
+import { serverUrl } from '../../redux/serverURL';
 
 
 
@@ -7,7 +8,7 @@ const Item = props => {
     return (
         <li>
             <Card>
-                <CardImg top src={props.item.image} alt={props.item.name} ></CardImg>
+                <CardImg top src={serverUrl + props.item.image} alt={props.item.name} ></CardImg>
                 <CardBody style={{textAlign: "left"}} >
                     <CardTitle>
                         <h2>{props.item.name}</h2>

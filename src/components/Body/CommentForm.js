@@ -20,7 +20,7 @@ class CommentForm extends Component {
             author: "",
             rating: "",
             comment: ""
-        })
+        });
         event.preventDefault();
     }
 

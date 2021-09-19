@@ -1,15 +1,57 @@
 import * as actionType from './actionTypes';
-import DISHES from '../data/Products';
+import axios from 'axios';
+import {serverUrl} from './serverURL';
 
 export const addComment = (dishId, author, rating, comment) => {
+    return dispatch => {
+        const newComment = {
+            dishId: dishId,
+            comment: comment,
+            rating: rating,
+            author: author
+        }
+        newComment.date = new Date().toISOString();
+
+        axios.post(serverUrl + "commentsData", newComment)
+            .then(response => response.data)
+            .then(comment => dispatch(commentConcat(comment)));
+    }
+}
+
+export const commentConcat = comment => {
     return {
         type: actionType.addComment,
-        payload: {
-            dishId: dishId,
-            author: author,
-            rating: rating,
-            comment: comment
+        payload: comment
+    }
+}
+
+export const loadComments = comments => {
+    return {
+        type: actionType.loadComments,
+        payload: comments
+    }
+}
+
+export const commentsLoading = () => {
+    return {
+        type: actionType.commentsLoading
+    }
+}
+
+export const fetchComments = () =>{
+    return dispatch => {
+        dispatch(commentsLoading());
+
+        const commentsServerfetching = async () => {
+            try {
+                let comments = await axios(serverUrl + "commentsData");
+                dispatch(loadComments(comments.data));
+
+            } catch (error) {
+                console.log("Comments:", error.message);
+            }
         }
+        commentsServerfetching();
     }
 }
 
@@ -26,12 +68,26 @@ export const loadDishes = DISHES => {
     }
 }
 
+export const dishesLoadFailed = errMess => {
+    return {
+        type: actionType.dishesLoadFailed,
+        payload: errMess
+    }
+}
+
 export const fetchDishes = () => {
     return dispatch => {
         dispatch(dishesLoading());
 
-        setTimeout(() => {
-            dispatch(loadDishes(DISHES))
-        }, 2000);
+        let dishesServerfetching = async () => {
+            try {
+                let dishes = await axios(serverUrl + 'DISHES');
+                dispatch(loadDishes(dishes.data));
+    
+            } catch (error) {
+                dispatch(dishesLoadFailed(error.message));
+            }
+        }
+        dishesServerfetching();
     }
 }

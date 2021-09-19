@@ -1,7 +1,9 @@
 import React from 'react';
-import { Button, FormGroup, Label, Col } from 'reactstrap';
+import { Button, FormGroup, Label, Col, Alert } from 'reactstrap';
 import { Form, Control, Errors, actions } from 'react-redux-form';
 import { connect } from 'react-redux';
+import axios from 'axios';
+import { serverUrl } from '../../redux/serverURL';
 
 const mapDispatchToprops = dispatch => {
     return {
@@ -16,9 +18,44 @@ const isNumber = val => !isNaN(Number(val));
 const validEmail = val => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(val);
 
 class Contact extends React.Component {
+    state = {
+        alertShow: false,
+        alertText: null,
+        alertType: null
+    }
 
     submitHandeler = values => {
-        console.log(values);
+        axios.post(serverUrl + "feedback", values)
+            .then(Response => Response.status)
+            .then(status => {
+                if (status === 201) {
+                    this.setState({
+                        alertShow: true,
+                        alertText: "Submitted Successfully",
+                        alertType: "success"
+                    });
+                
+
+                    setTimeout(() => {
+                        this.setState({
+                            alertShow: false
+                        })
+                    }, 8000);
+                }
+            })
+            .catch(error => {
+                this.setState({
+                    alertText: "Submit Failed",
+                    alertShow: true,
+                    alertType: "danger"
+                });
+
+                setTimeout(() => {
+                    this.setState({
+                        alertShow: false
+                    })
+                }, 8000);
+            })
         this.props.resetFeedbackForm();
     }
 
@@ -31,6 +68,7 @@ class Contact extends React.Component {
                         <h3>Send us your Feedback </h3>
                     </div>
                     <div className="col-12 col-lg-8 mx-auto mt-4" >
+                    <Alert isOpen= {this.state.alertShow} color={this.state.alertType} >{this.state.alertText}</Alert>
                         <Form model="feedback" onSubmit={values => this.submitHandeler(values)} >
                             <FormGroup row>
                                 <Label htmlFor="firstname" md={3} >First Name : </Label>
@@ -49,7 +87,7 @@ class Contact extends React.Component {
                                     <Control.text model=".lastname" name="lastname" placeholder="Last Name" className="form-control" validators={{
                                         required
                                     }} />
-                                     <Errors className="text-danger" model=".lastname" show="touched" messages={{
+                                    <Errors className="text-danger" model=".lastname" show="touched" messages={{
                                         required: 'Required'
                                     }} />
                                 </Col>
@@ -70,7 +108,7 @@ class Contact extends React.Component {
                             <FormGroup row>
                                 <Label htmlFor="email" md={3} >Email : </Label>
                                 <Col md={9} >
-                                    <Control.text model=".email" name="email" placeholder="Email" className="form-control"validators={{
+                                    <Control.text model=".email" name="email" placeholder="Email" className="form-control" validators={{
                                         required,
                                         validEmail
                                     }} />

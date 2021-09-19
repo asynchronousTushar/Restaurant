@@ -4,9 +4,9 @@ import DishesList from './DishesList';
 import Comments from './Comments';
 import CommentForm from './CommentForm';
 import Loader from './Loader';
-import { Modal, ModalBody, ModalFooter, Button } from 'reactstrap';
+import { Modal, ModalBody, ModalFooter, Button, Alert } from 'reactstrap';
 import { connect } from 'react-redux';
-import { addComment, fetchDishes } from '../../redux/actionCreator';
+import { addComment, fetchComments, fetchDishes } from '../../redux/actionCreator';
 
 const mapstatetoprops = state => {
     return {
@@ -20,7 +20,8 @@ const mapdispatchtoprops = dispatch => {
         addComment: (dishId, author, rating, comment) => {
             dispatch(addComment(dishId, author, rating, comment))
         },
-        fetchDishes: () => dispatch(fetchDishes())
+        fetchDishes: () => dispatch(fetchDishes()),
+        fetchComment: () => dispatch(fetchComments())
     }
 }
 
@@ -45,9 +46,10 @@ class List extends Component {
 
     componentDidMount() {
         this.props.fetchDishes();
- 
+        this.props.fetchComment();
+        console.log(this.props);
     }
-
+    
     render() {
         
         if (this.props.Dishes.isLoading) {
@@ -55,6 +57,10 @@ class List extends Component {
                 <div>
                     <Loader />
                 </div>
+            );
+        } else if (this.props.Dishes.errMessage !== null) {
+            return (
+                <Alert color = "danger" >{ this.props.Dishes.errMessage }</Alert>
             );
         } else {
             const dishesList = this.props.Dishes.dishes.map(item => {
@@ -73,16 +79,26 @@ class List extends Component {
 
             let commentsFinder = null;
 
-            if (this.state.selectedItem != null) {
-                commentsFinder = this.props.CommentsData.map(item => {
+            if (this.props.CommentsData.isLoading) {
+                commentsFinder = <Loader />;
 
-                    if (item.dishId === this.state.selectedItem.id) {
-                        return (<Comments comment={item} key={item.id} />)
-                    }
-
-                    return null;
-                });
+            } else {
+                
+                if (this.state.selectedItem != null) {
+                    commentsFinder = this.props.CommentsData.comments.map(item => {
+    
+                        if (item.dishId === this.state.selectedItem.id) {
+                            return (
+                                <Comments comment={item} key={item.id} />
+                            );
+                        }
+    
+                        return null;
+                    });
+                }
             }
+
+
 
             let commentFormDishesId = null;
 

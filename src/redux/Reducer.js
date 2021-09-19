@@ -1,11 +1,10 @@
-import CommentsData from '../data/CommentsData';
 import { combineReducers } from 'redux';
 import * as actionType from "./actionTypes";
 import { createForms } from 'react-redux-form';
 import { initialContactForm } from './form';
 
 
-const dishesReducer = (disheState = {isLoading: false, dishes: []}, action) => {
+const dishesReducer = (disheState = {isLoading: false, dishes: [], errMessage: null }, action) => {
     switch (action.type) {
         case actionType.dishesLoading:
             return {
@@ -19,23 +18,40 @@ const dishesReducer = (disheState = {isLoading: false, dishes: []}, action) => {
                 isLoading: false,
                 dishes: action.payload
             }
+        case actionType.dishesLoadFailed:
+            return {
+                ...disheState,
+                isLoading: false,
+                errMessage: action.payload
+            }
 
         default:
             return disheState;
     }
 }
 
-const commentsReducer = (commentstate = CommentsData, action) => {
+const commentsReducer = (commentstate = {isLoading: false, comments: [] }, action) => {
 
     switch (action.type) {
         case actionType.addComment:
-            
-            let comment = action.payload;
-            comment.id = commentstate.length;
-            comment.date = new Date().toDateString();
-            console.log(comment);
-
-            return commentstate.concat(comment);
+            return {
+                ...commentstate,
+                comments: commentstate.comments.concat(action.payload)
+            }
+        
+        case actionType.commentsLoading:
+            return {
+                ...commentstate,
+                isLoading: true,
+                comments: []
+            }
+        
+        case actionType.loadComments:
+            return {
+                ...commentstate,
+                isLoading: false,
+                comments: action.payload
+            }
         
         default:
             return commentstate;
