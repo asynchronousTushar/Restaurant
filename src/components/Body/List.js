@@ -64,7 +64,7 @@ class List extends Component {
         } else {
             const dishesList = this.props.Dishes.dishes.map(item => {
                 return (
-                    <DishesList dishesItem={item} key={item.id} listItem={this.listItem.bind(this, item)} />
+                    <DishesList  dishesItem={item} key={item.id} listItem={this.listItem.bind(this, item)} />
                 );
             });
 
@@ -106,11 +106,9 @@ class List extends Component {
             }
 
             return (
-                <div className="List" >
-                    <div className="row mt-4 ">
-                        <div className="List col-3">
+                <div className="List " >
+                    <div className=" d-flex flex-wrap m-2">
                             {dishesList}
-                        </div>
                     </div>
                     <div className="row" >
                         <Modal isOpen={this.state.modelToggler} size="lg" contentClassName="my-modal-style">
