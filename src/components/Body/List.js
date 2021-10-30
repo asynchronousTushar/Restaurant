@@ -47,7 +47,6 @@ class List extends Component {
     componentDidMount() {
         this.props.fetchDishes();
         this.props.fetchComment();
-        console.log(this.props);
     }
     
     render() {

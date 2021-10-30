@@ -1,1 +1,1 @@
-export const serverUrl = "http://localhost:3001/";
+export const serverUrl = "https://restaurant-project-78e90-default-rtdb.asia-southeast1.firebasedatabase.app/data/";
