@@ -11,13 +11,13 @@ const Body = () => {
     return (
         <div>
             <Switch>
-                <Route path="/" exact component={ Home } />
-                <Route path="/blog" exact component={ Blog } />
-                <Route path="/gallery" exact component={ Gallery } />
-                <Route path="/recipe" exact component={ Recipe } />
-                <Route path="/contact" exact component={ Contact } />
-                <Route path="/about" exact component={ About } />
-                <Redirect from="/home" to="/" />
+                <Route path="/" exact component={Home} />
+                <Route path="/blog" exact component={Blog} />
+                <Route path="/gallery" exact component={Gallery} />
+                <Route path="/recipe" exact component={Recipe} />
+                <Route path="/contact" exact component={Contact} />
+                <Route path="/about" exact component={About} />
+                <Redirect from="/home" to="/" exact />
             </Switch>
         </div>
     );

@@ -8,7 +8,8 @@ const DishesList = (props) => {
             <Card color="light" className="text-dark my-3 w-100 shadow-lg rounded">
                 <CardBody>
                     <CardImg src={props.dishesItem.image} style={{ height: "200px" }} />
-                    <CardTitle style={{ cursor: "pointer", fontWeight: "bold", display: "inline-block" }} onClick={props.listItem} >{props.dishesItem.name}</CardTitle>
+                    <br/>
+                    <CardTitle style={{ cursor: "pointer", fontWeight: "bold", display: "inline-block", paddingTop: 20 }} className="cardtitle" onClick={props.listItem} >{props.dishesItem.name}</CardTitle>
                 </CardBody>
             </Card>
         </div>

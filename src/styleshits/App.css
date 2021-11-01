@@ -1,6 +1,4 @@
-.App {
-  text-align: center;
-}
+
 .Navigation li {
     font-weight: bold;
 }
@@ -38,3 +36,7 @@
 /* .List .row {
     margin: 0;
 } */
+
+.cardtitle:hover {
+    color: #000000;
+}

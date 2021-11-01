@@ -71,7 +71,7 @@ class List extends Component {
             let Dishesdetail = null;
 
             if (this.state.selectedItem != null) {
-                Dishesdetail = <ul className="row">
+                Dishesdetail = <ul className="row text-center">
                     <Item item={this.state.selectedItem} />
                 </ul>
             }
@@ -107,12 +107,12 @@ class List extends Component {
 
             return (
                 <div className="List " >
-                    <div className=" d-flex flex-wrap m-2">
+                    <div className=" d-flex flex-wrap m-2 text-center">
                             {dishesList}
                     </div>
                     <div className="row" >
                         <Modal isOpen={this.state.modelToggler} size="lg" contentClassName="my-modal-style">
-                            <ModalBody>
+                            <ModalBody >
                                 {Dishesdetail}
                                 <ul>{commentsFinder}</ul>
                                 <br />

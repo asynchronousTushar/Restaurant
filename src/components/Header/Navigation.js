@@ -5,8 +5,8 @@ import { NavLink } from 'react-router-dom';
 class Navigation extends React.Component {
 
     state = {
-            isNavOpen: false
-        }
+        isNavOpen: false
+    }
 
 
     togglerHandeler = () => {
@@ -21,10 +21,10 @@ class Navigation extends React.Component {
             <div className="Navigation" >
                 <Navbar dark color="dark" expand="sm">
                     <div className="container" >
-                        <NavbarBrand href="/">Grand Restaurant</NavbarBrand>
-                        <NavbarToggler onClick={ this.togglerHandeler}/>
+                        <NavLink to="/home" exact ><NavbarBrand>Grand Restaurant</NavbarBrand> </NavLink>
+                        <NavbarToggler onClick={this.togglerHandeler} />
                         <Collapse isOpen={this.state.isNavOpen} navbar  >
-                            <Nav className="ml-auto float-left" navbar >
+                            <Nav className="ml-auto float-left text-left" navbar >
                                 <NavItem>
                                     <NavLink to="/home" exact className="nav-link" >Home</NavLink>
                                 </NavItem>
@@ -48,7 +48,7 @@ class Navigation extends React.Component {
                     </div>
                 </Navbar>
 
-            
+
             </div>
         );
     }
